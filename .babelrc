@@ -1,6 +1,8 @@
 {
   "presets": [
     [ "es2015", { "modules": false } ],
-    "react"
-  ]
+    "react",
+    "env"
+  ],
+  "plugins": ["transform-object-rest-spread", "transform-decorators-legacy"]
 }

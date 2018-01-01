@@ -10,16 +10,22 @@ const plugins = {
         warnings: false,
         drop_console: false,
       }
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
     })
   ]
 };
 
 module.exports = {
     entry: {
-        index: "./src/js/index.js",
+        index: "./src/app/index.js",
+        style: "./src/app/styles/main.scss"
     },
     output: {
-        path: path.resolve(__dirname, './src/app/public/js'),
+        path: path.resolve(__dirname, './src/server/public/js'),
         filename: '[name].js'
     },
     module: {
@@ -41,7 +47,11 @@ module.exports = {
                   { loader: 'css-loader'},
                   { loader: 'sass-loader'}
                 ]
-            }
+            },
+            {
+                test: /.json?$/,
+                use: 'json-loader'
+            },
         ]
     },
     resolve: {
