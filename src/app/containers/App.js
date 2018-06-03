@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import reduxConnectProps from '../utils/redux-connect-props';
 
+import Routes from '../components/Routes'
+
 @connect(store => ({
 }))
 class App extends React.Component {
@@ -12,9 +14,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <h1>Crypto Clash</h1>
-      // Routes will go in here as well
-    );
+      <main className="main-container">
+        <Routes />
+      </main>
+    )
   }
 }
 

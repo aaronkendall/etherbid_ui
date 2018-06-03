@@ -5,12 +5,6 @@ const environment = process.env.NODE_ENV || 'development';
 const plugins = {
   development: [],
   production: [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-        drop_console: false,
-      }
-    }),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
@@ -62,5 +56,6 @@ module.exports = {
         ]
     },
     plugins: plugins[environment],
-    watch: environment === 'development'
+    watch: environment === 'development',
+    mode: environment
 };
