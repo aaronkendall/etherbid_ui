@@ -1,6 +1,6 @@
 import Units from 'ethereumjs-units'
 
-export function cleanAuctonData(rawAuction) {
+export function cleanAuctionData(rawAuction) {
   return {
     highestBid: Units.convert(rawAuction[0].toString(), 'wei', 'eth'),
     highestBidder: rawAuction[1],

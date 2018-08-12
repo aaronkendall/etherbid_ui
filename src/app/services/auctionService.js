@@ -1,29 +1,25 @@
 import Units from 'ethereumjs-units'
+import contract from 'truffle-contract'
 
 import EthBid from '../utils/EthBidABI.json'
-import { cleanAuctonData } from '../utils/auctionUtils'
-import { CONTRACT_ADDRESS } from '../utils/constants'
+import { cleanAuctionData } from '../utils/auctionUtils'
 
 export default class AuctionService {
-  constructor(provider, defaultAddress= null) {
-    this.accountAddress = defaultAddress
-    this.initialiseContract(provider)
+  constructor(provider, contractAddress, defaultAddress = null) {
+    this.initialiseContract(provider, contractAddress, defaultAddress)
   }
 
-  initialiseContract(provider) {
-    const auctionContract = contract({ abi: EthBid.abi })
+  initialiseContract(provider, contractAddress, accountAddress) {
+    const auctionContract = contract({ abi: EthBid })
     auctionContract.setProvider(provider)
-    auctionContract.defaults({ from: this.accountAddress })
 
-    this.contract = auctionContract.at(CONTRACT_ADDRESS)
-  }
+    if (accountAddress) auctionContract.defaults({ from: accountAddress })
 
-  setDefaultAddress(address) {
-    this.accountAddress = address
+    this.contract = auctionContract.at(contractAddress)
   }
 
   getAuctionInfo() {
-    return this.contract.getAuctionInfo.call()
+    return this.contract.getAuctionInfo()
       .then(auctionData => cleanAuctionData(auctionData))
       .catch(error => console.log('Error requesting auction info', error))
   }

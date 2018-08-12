@@ -1,5 +1,5 @@
 import AuctionService from '../services/auctionService'
-import { ACTION_TYPES } from '../utils/constants'
+import { ACTION_TYPES, CONTRACT_ADDRESS } from '../utils/constants'
 const { core } = ACTION_TYPES
 
 export function toggleSignIn(userIsSignedIn) {
@@ -17,7 +17,7 @@ export function setContractService(service) {
 export function initApp(defaultAccount, web3Provider) {
   return (dispatch) => {
     dispatch(setDefaultAccount(defaultAccount))
-    dispatch(setContractService(new AuctionService(web3Provider, defaultAccount)))
+    dispatch(setContractService(new AuctionService(web3Provider, CONTRACT_ADDRESS, defaultAccount)))
     dispatch(toggleSignIn(true))
   }
 }

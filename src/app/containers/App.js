@@ -7,11 +7,12 @@ import { ToastContainer, toast } from 'react-toastify'
 
 import initialiseWeb3 from '../utils/initWeb3'
 import { updateAuctionInfo, placeBid } from '../actions/auctionActions'
+import { isBrowser } from '../utils/constants'
 
 import SubmitBid from '../components/SubmitBid'
 
 @connect(store => ({
-  auction,
+  auction: store.auction,
   userIsSignedIn: store.core.userIsSignedIn
 }))
 class App extends React.Component {
@@ -19,7 +20,6 @@ class App extends React.Component {
     super(props)
 
     this.state = {
-      isLoading: true,
       auctionForm: {
         bidder: '',
         bid: ''
@@ -28,11 +28,11 @@ class App extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { dispatch, userIsSignedIn } = this.props
+
     initialiseWeb3(dispatch)
     dispatch(updateAuctionInfo())
-      .then(() => this.setState({ isLoading: false }))
 
     window.setInterval(() => {
       dispatch(updateAuctionInfo())
@@ -79,9 +79,12 @@ class App extends React.Component {
       <section className="auction">
         <h2 className="auction__prize">Prize Pool : {prize}</h2>
         <Countdown className="auction__timer" date={endTime} />
-        <h2 className="auction__highest-bidder">
+        {highestBidder && <h2 className="auction__highest-bidder">
           {highestBidder} is the highest bidder with {highestBid} ETH!
-        </h2>
+        </h2>}
+        {!highestBidder && <h2 className="auction__highest-bidder">
+          There are no bids yet! Be the first!
+        </h2>}
       </section>
     )
   }
@@ -92,16 +95,15 @@ class App extends React.Component {
 
   render() {
     const { userIsSignedIn } = this.props
-    const { bidInProgress } = this.state
+    const { bidInProgress, isLoading } = this.state
 
     return (
       <main className="main-container">
         <ToastContainer />
         <h1 className="logo">EthBid</h1>
-        {!isLoading && this._renderAuction()}
-        {isLoading && !userIsSignedIn && <Loading />}
-        {!isLoading && !userIsSignedIn && this._renderWeb3Instructons()}
-        {!isLoading && userIsSignedIn &&
+        {this._renderAuction()}
+        {!userIsSignedIn && this._renderWeb3Instructons()}
+        {userIsSignedIn &&
           <SubmitBid handleChange={() => this.handleFormChange} handleSubmit={() => this.handleBidSubmit} />
         }
       </main>

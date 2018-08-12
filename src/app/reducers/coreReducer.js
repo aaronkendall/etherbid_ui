@@ -1,5 +1,5 @@
-import { ACTION_TYPES } from '../utils/constants';
-const { core } = ACTION_TYPES;
+import { ACTION_TYPES } from '../utils/constants'
+const { core } = ACTION_TYPES
 
 const defaultState = {
   userIsSignedIn: false,
