@@ -86,7 +86,7 @@ class App extends React.Component {
   }
 
   _renderWeb3Instructons() {
-    return <p>Install Web3 you donk</p>
+    return <p>Install MetaMask you donk</p>
   }
 
   render() {
