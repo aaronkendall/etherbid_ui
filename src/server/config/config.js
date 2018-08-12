@@ -1,7 +1,11 @@
 const environment = process.env.NODE_ENV || 'development';
 const envConfig = {
-  development: {},
-  production: {}
+  development: {
+    contractAddress: '0xrinkeby'
+  },
+  production: {
+    infuraEndpoint: '0xmainnet'
+  }
 };
 
 const defaultConfig = {};

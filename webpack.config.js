@@ -14,7 +14,7 @@ const plugins = {
       }
     })
   ]
-};
+}
 
 const isDevelopment = environment === 'development'
 
@@ -50,10 +50,6 @@ module.exports = {
             use: 'babel-loader'
         },
         {
-            test: /.json?$/,
-            use: 'json-loader'
-        },
-        {
           test: /\.scss$/,
           use: [
             MiniCssExtractPlugin.loader,
@@ -79,4 +75,4 @@ module.exports = {
   ],
   watch: isDevelopment,
   mode: environment
-};
+}

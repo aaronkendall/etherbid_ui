@@ -1,5 +1,5 @@
-import categoryActions from './categoryActions';
+import auctionActions from './auctionActions';
 
 export {
-  categoryActions
+  auctionActions
 }

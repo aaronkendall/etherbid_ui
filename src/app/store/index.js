@@ -9,14 +9,14 @@ export default function configureStore(initialState, history) {
   const middlewares = [
     promise(),
     thunk
-  ];
+  ]
 
   if (history) {
     middlewares.push(routerMiddleware(history));
   }
 
   if (process.env.NODE_ENV !== 'production') {
-    middlewares.push(createLogger());
+    middlewares.push(createLogger())
   }
 
   const middleware = applyMiddleware(...middlewares);

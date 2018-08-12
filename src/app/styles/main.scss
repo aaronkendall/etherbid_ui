@@ -3,3 +3,12 @@
 
 // reset the styles
 @import 'base/reset';
+
+// import the components
+@import 'components/loading';
+
+.main-container {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: $background-gradient;
+}
