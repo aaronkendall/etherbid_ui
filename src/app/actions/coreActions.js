@@ -1,4 +1,4 @@
-import EthBid from '../services/auctionService'
+import AuctionService from '../services/auctionService'
 import { ACTION_TYPES } from '../utils/constants'
 const { core } = ACTION_TYPES
 
@@ -17,7 +17,7 @@ export function setContractService(service) {
 export function initApp(defaultAccount, web3Provider) {
   return (dispatch) => {
     dispatch(setDefaultAccount(defaultAccount))
-    dispatch(setContractService(new EthBid(web3Provider, defaultAccount)))
+    dispatch(setContractService(new AuctionService(web3Provider, defaultAccount)))
     dispatch(toggleSignIn(true))
   }
 }

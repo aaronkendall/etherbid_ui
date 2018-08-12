@@ -5,8 +5,8 @@ import { cleanAuctonData } from '../utils/auctionUtils'
 import { CONTRACT_ADDRESS } from '../utils/constants'
 
 export default class AuctionService {
-  constructor(provider, defaultAccount) {
-    this.accountAddress = defaultAccount
+  constructor(provider, defaultAddress= null) {
+    this.accountAddress = defaultAddress
     this.initialiseContract(provider)
   }
 
@@ -16,6 +16,10 @@ export default class AuctionService {
     auctionContract.defaults({ from: this.accountAddress })
 
     this.contract = auctionContract.at(CONTRACT_ADDRESS)
+  }
+
+  setDefaultAddress(address) {
+    this.accountAddress = address
   }
 
   getAuctionInfo() {

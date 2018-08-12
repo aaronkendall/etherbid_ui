@@ -1,39 +1,46 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
+import Web3 from 'web3'
 // import { Helmet } from 'react-helmet'
 // import { StaticRouter as Router } from 'react-router-dom'
 import asyncBootstrapper from 'react-async-bootstrapper'
 import configureStore from '../../app/store'
 import App from '../../app/containers/App'
+import AuctonService from '../../app/services/auctionService'
 import config from '../config/config'
 
 export default (req, res) => {
-  const store = configureStore({}, null)
-  // const location = req.url
-  // const context = {}
+  const httpProvider = new Web3.providers.HttpProvider(config.infuraEndpoint)
+  const auctionService = new AuctionService(new Web3(httpProvider))
 
-  const Root = (
-    <Provider store={store}>
-      {/* <Router location={location} context={context}> */}
-        <App />
-      {/* </Router> */}
-    </Provider>
-  )
+  return auctionService.getAuctionInfo()
+    .then((auction) => {
+      const initialState = {
+        auction,
+        core: { auctionService }
+      }
+      const store = configureStore(initialState, null)
+      // const location = req.url
+      // const context = {}
 
-  return asyncBootstrapper(Root).then(() => {
-    const currentState = store.getState()
-    const appHtml = renderToString(Root)
-    // const head = Helmet.rewind()
-    const initialState = JSON.stringify(currentState)
+      const Root = (
+        <Provider store={store}>
+          {/* <Router location={location} context={context}> */}
+            <App />
+          {/* </Router> */}
+        </Provider>
+      )
+      const appHtml = renderToString(Root)
+      // const head = Helmet.rewind()
 
-    // Send HTML React app
-    return res.render('index', {
-      appHtml,
-      initialState,
-      title: 'EthBid | Buy some Ether using some Ether. Simple',
-      contractAddress: config.contractAddress
+      // Send HTML React app
+      return res.render('index', {
+        appHtml,
+        initialState: JSON.stringify(initialState),
+        title: 'EthBid | Buy some Ether using some Ether. Simple',
+        contractAddress: config.contractAddress
+      })
     })
-  })
-  .catch(error => console.log('Error bootstrapping server render: ', error));
+    .catch(error => console.log('Error bootstrapping server render: ', error))
 }

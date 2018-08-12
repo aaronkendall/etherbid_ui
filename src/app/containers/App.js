@@ -29,13 +29,14 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    const { dispatch } = this.props
+    const { dispatch, userIsSignedIn } = this.props
     initialiseWeb3(dispatch)
     dispatch(updateAuctionInfo())
       .then(() => this.setState({ isLoading: false }))
 
     window.setInterval(() => {
       dispatch(updateAuctionInfo())
+      if (!userIsSignedIn) initialiseWeb3(dispatch)
     }, 10000)
   }
 
