@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./src/app/bin/www",
+    "start": "node ./src/app/bin",
     "prod": "NODE_ENV=production npm start",
-    "dev": "NODE_ENV=development nodemon ./src/server/bin/www",
+    "dev": "NODE_ENV=development nodemon ./src/server/bin",
     "hot": "NODE_ENV=development webpack",
     "build": "NODE_ENV=production webpack --optimize-minimize",
     "local": "npm run hot & npm run dev"

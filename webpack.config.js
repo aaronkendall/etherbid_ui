@@ -30,7 +30,7 @@ module.exports = {
     ]
   },
   entry: {
-      index: "./src/app/index.js",
+      index: ["babel-polyfill", "./src/app/index.js"],
       style: "./src/app/styles/main.scss"
   },
   output: {
