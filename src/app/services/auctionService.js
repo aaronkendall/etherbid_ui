@@ -19,7 +19,7 @@ export default class AuctionService {
   }
 
   getAuctionInfo() {
-    return this.contract.getAuctionInfo()
+    return this.contract.getAuctionInfo.call()
       .then(auctionData => cleanAuctionData(auctionData))
       .catch(error => console.log('Error requesting auction info', error))
   }

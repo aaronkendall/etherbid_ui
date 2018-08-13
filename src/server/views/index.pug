@@ -5,8 +5,10 @@ html
     link(rel="stylesheet" type="text/css" href="/build/style.css")
   body
     #app!= appHtml
-    script(src="/build/index.js")
     script.
       window._config = {
-        contractAddress: '!{contractAddress}',
+        contractAddress: '!{contractAddress}'
       }
+      
+      window.__PRELOADED_STATE__ = !{initialState}
+    script(src="/build/index.js")

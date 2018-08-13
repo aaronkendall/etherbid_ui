@@ -32,7 +32,6 @@ class App extends React.Component {
     const { dispatch, userIsSignedIn } = this.props
 
     initialiseWeb3(dispatch)
-    dispatch(updateAuctionInfo())
 
     window.setInterval(() => {
       dispatch(updateAuctionInfo())
@@ -78,7 +77,7 @@ class App extends React.Component {
     return (
       <section className="auction">
         <h2 className="auction__prize">Prize Pool : {prize}</h2>
-        <Countdown className="auction__timer" date={endTime} />
+        <Countdown className="auction__timer" date={new Date(endTime)} />
         {highestBidder && <h2 className="auction__highest-bidder">
           {highestBidder} is the highest bidder with {highestBid} ETH!
         </h2>}

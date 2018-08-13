@@ -45,7 +45,7 @@
     "redux-promise-middleware": "4.4.1",
     "redux-thunk": "2.2.0",
     "truffle-contract": "^3.0.6",
-    "web3": "1.0.0-beta.35",
+    "web3": "1.0.0-beta.27",
     "xhr2": "0.1.4"
   },
   "devDependencies": {

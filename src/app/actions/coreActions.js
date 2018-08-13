@@ -3,7 +3,7 @@ import { ACTION_TYPES, CONTRACT_ADDRESS } from '../utils/constants'
 const { core } = ACTION_TYPES
 
 export function toggleSignIn(userIsSignedIn) {
-  return { type: core.SIGNING_ACTION, payload: userIsSignedIn }
+  return { type: core.AUTH_ACTION, payload: userIsSignedIn }
 }
 
 export function setDefaultAccount(address) {

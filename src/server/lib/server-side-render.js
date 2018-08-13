@@ -38,7 +38,7 @@ export default (req, res) => {
       // Send HTML React app
       return res.render('index', {
         appHtml,
-        initialState: JSON.stringify(initialState),
+        initialState: JSON.stringify({}),
         title: 'EthBid | Buy some Ether using some Ether. Simple',
         contractAddress: config.contractAddress
       })
