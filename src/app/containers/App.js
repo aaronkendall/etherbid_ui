@@ -13,7 +13,8 @@ import SubmitBid from '../components/SubmitBid'
 
 @connect(store => ({
   auction: store.auction,
-  userIsSignedIn: store.core.userIsSignedIn
+  userIsSignedIn: store.core.userIsSignedIn,
+  auctionService: store.core.auctionService
 }))
 class App extends React.Component {
   constructor(props) {
@@ -26,6 +27,17 @@ class App extends React.Component {
       },
       bidInProgress: false
     }
+
+    this.checkForMetaMask = this.checkForMetaMask.bind(this)
+    this.intervalId = null
+  }
+
+  checkForMetaMask() {
+    const { dispatch, auctionService } = this.props
+    const hasNoAuctionService = Object.keys(auctionService).length === 0
+
+    initialiseWeb3(dispatch, hasNoAuctionService)
+    dispatch(updateAuctionInfo())
   }
 
   componentDidMount() {
@@ -33,17 +45,21 @@ class App extends React.Component {
 
     initialiseWeb3(dispatch)
 
-    window.setInterval(() => {
-      dispatch(updateAuctionInfo())
-      if (!userIsSignedIn) initialiseWeb3(dispatch)
-    }, 10000)
+    if (!userIsSignedIn) {
+      this.intervalId  = setInterval(this.checkForMetaMask, 10000)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { auction: { highestBidder, highestBid } } = nextProps
+    const { auction: { highestBidder, highestBid }, userIsSignedIn } = nextProps
 
     if (this.props.highestBidder && this.props.highestBidder !== highestBidder) {
       toast.info(`New highest bidder! ${highestBidder} with ${highestBid} ETH`)
+    }
+
+    // do we need this?
+    if (!this.props.userIsSignedIn && userIsSignedIn) {
+      removeInterval(this.intervalId)
     }
   }
 

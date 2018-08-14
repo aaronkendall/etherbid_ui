@@ -14,13 +14,12 @@ export default (req, res) => {
   Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send
 
   const httpProvider = new Web3.providers.HttpProvider(config.infuraEndpoint)
-  const auctionService = new AuctionService(httpProvider, config.contractAddress, config.defaultAddress)
+  const auctionService = new AuctionService(httpProvider, config.contractAddress)
 
   return auctionService.getAuctionInfo()
     .then((auction) => {
       const initialState = {
-        auction,
-        core: { auctionService }
+        auction
       }
       const store = configureStore(initialState, null)
       // const location = req.url
@@ -38,9 +37,10 @@ export default (req, res) => {
       // Send HTML React app
       return res.render('index', {
         appHtml,
-        initialState: JSON.stringify({}),
+        initialState: JSON.stringify(store.getState()),
         title: 'EthBid | Buy some Ether using some Ether. Simple',
-        contractAddress: config.contractAddress
+        contractAddress: config.contractAddress,
+        infuraEndpoint: config.infuraEndpoint
       })
     })
     .catch(error => console.log('Error bootstrapping server render: ', error))

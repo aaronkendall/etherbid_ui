@@ -14,7 +14,7 @@ export function setContractService(service) {
   return { type: core.SET_CONTRACT_SERVICE, payload: service }
 }
 
-export function initApp(defaultAccount, web3Provider) {
+export function initApp(web3Provider, defaultAccount) {
   return (dispatch) => {
     dispatch(setDefaultAccount(defaultAccount))
     dispatch(setContractService(new AuctionService(web3Provider, CONTRACT_ADDRESS, defaultAccount)))

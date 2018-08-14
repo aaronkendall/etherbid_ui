@@ -12,3 +12,4 @@ export const ACTION_TYPES = {
 }
 
 export const CONTRACT_ADDRESS = isBrowser && window._config.contractAddress
+export const INFURA_ENDPOINT = isBrowser && window._config.infuraEndpoint

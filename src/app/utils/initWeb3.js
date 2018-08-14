@@ -1,15 +1,28 @@
-import { initApp } from '../actions/coreActions';
+import Web3 from 'web3'
 
-export default function initialiseWeb3(dispatch) {
+import AuctionService from '../services/auctionService'
+import { initApp, setContractService } from '../actions/coreActions'
+import { INFURA_ENDPOINT, CONTRACT_ADDRESS } from '../utils/constants'
+
+export default function initialiseWeb3(dispatch, hasNoAuctionService) {
   if (typeof window.web3 !== 'undefined') {
-    const ethProvider = web3.currentProvider
+    const ethProvider = window.web3.currentProvider
 
-    web3.eth.getAccounts((err, accounts) => {
+    return window.web3.eth.getAccounts((err, accounts) => {
       if (accounts.length > 0) {
         // This needs to be added to state here as it doesn't persist otherwise and
         // we get some weird errors occasionally with the address being undefined
-        dispatch(initApp(accounts[0], ethProvider))
+        dispatch(initApp(ethProvider, accounts[0]))
       }
     })
+  }
+
+  if (hasNoAuctionService) {
+    console.log('hello')
+    Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send
+
+    const httpProvider = new Web3.providers.HttpProvider(INFURA_ENDPOINT)
+    const auctionService = new AuctionService(httpProvider, CONTRACT_ADDRESS)
+    dispatch(setContractService(auctionService))
   }
 }
