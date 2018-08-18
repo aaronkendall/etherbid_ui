@@ -59,7 +59,7 @@ class App extends React.Component {
 
     // do we need this?
     if (!this.props.userIsSignedIn && userIsSignedIn) {
-      removeInterval(this.intervalId)
+      clearInterval(this.intervalId)
     }
   }
 
