@@ -2,6 +2,13 @@
   max-width: $auction-info-max-width;
   margin: 0 auto;
 
+  .submit-bid__error {
+    font-size: $font-size-md;
+    color: $color-black;
+    display: block;
+    margin-bottom: $spacing-md;
+  }
+
   .submit-bid__label {
     display: inline-block;
     width: calc(50% - 20px); // $spacing-md
@@ -24,6 +31,10 @@
       border-left: 0;
       border-top: 0;
       width: 100%;
+      outline: 0;
+      font-size: $font-size-md;
+      padding: 0;
+      color: #fff;
     }
   }
 

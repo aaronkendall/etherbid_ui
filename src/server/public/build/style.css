@@ -89,6 +89,11 @@ table {
 .submit-bid {
   max-width: 1000px;
   margin: 0 auto; }
+  .submit-bid .submit-bid__error {
+    font-size: 1.4em;
+    color: #2b2b2b;
+    display: block;
+    margin-bottom: 20px; }
   .submit-bid .submit-bid__label {
     display: inline-block;
     width: calc(50% - 20px);
@@ -108,7 +113,11 @@ table {
       border-right: 0;
       border-left: 0;
       border-top: 0;
-      width: 100%; }
+      width: 100%;
+      outline: 0;
+      font-size: 1.4em;
+      padding: 0;
+      color: #fff; }
   .submit-bid .submit-bid__button {
     display: block;
     color: white;

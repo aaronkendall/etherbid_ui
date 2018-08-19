@@ -5,8 +5,14 @@ export function updateAuctionInfo() {
   return (dispatch, getState) => {
     const { core: { auctionService } } = getState()
 
-    console.log(auctionService)
-
     return auctionService.getAuctionInfo()
+  }
+}
+
+export function placeBid(bidder, bid) {
+  return (dispatch, getState) => {
+    const { core: { auctionService, defaultAccount } } = getState()
+
+    return auctionService.placeBid(bidder, bid, defaultAccount)
   }
 }

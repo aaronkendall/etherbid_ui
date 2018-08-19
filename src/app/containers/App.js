@@ -4,9 +4,10 @@ import { connect } from 'react-redux'
 import reduxConnectProps from '../utils/redux-connect-props'
 import { ToastContainer, toast } from 'react-toastify'
 
-import initialiseWeb3 from '../utils/initWeb3'
+import { initApp } from '../actions/coreActions'
 import { updateAuctionInfo, placeBid } from '../actions/auctionActions'
 import { isBrowser } from '../utils/constants'
+import { isNaN } from '../utils/floatUtils'
 
 import SubmitBid from '../components/SubmitBid'
 import MetaMaskInfo from '../components/MetaMaskInfo'
@@ -15,8 +16,7 @@ import Modal from '../components/Modal'
 
 @connect(store => ({
   auction: store.auction,
-  userIsSignedIn: store.core.userIsSignedIn,
-  auctionService: store.core.auctionService
+  userIsSignedIn: store.core.userIsSignedIn
 }))
 class App extends React.Component {
   constructor(props) {
@@ -27,30 +27,26 @@ class App extends React.Component {
         bidder: '',
         bid: ''
       },
+      formError: '',
       bidInProgress: false,
       modalIsOpen: false
     }
-
-    this.checkForMetaMask = this.checkForMetaMask.bind(this)
-    this.intervalId = null
   }
 
-  checkForMetaMask() {
-    const { dispatch, auctionService } = this.props
-    const hasNoAuctionService = Object.keys(auctionService).length === 0
+  updateAppInfo() {
+    const { dispatch } = this.props
 
-    initialiseWeb3(dispatch, hasNoAuctionService)
+    dispatch(initApp())
     dispatch(updateAuctionInfo())
   }
 
-  componentDidMount() {
-    const { dispatch, userIsSignedIn } = this.props
+  componentWillMount() {
+    const { dispatch } = this.props
 
-    initialiseWeb3(dispatch)
-
-    // if (!userIsSignedIn) {
-    //   this.intervalId  = setInterval(this.checkForMetaMask, 10000)
-    // }
+    if (isBrowser) {
+      dispatch(initApp())
+      setInterval(() => this.updateAppInfo(), 5000)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -59,29 +55,27 @@ class App extends React.Component {
     if (this.props.highestBidder && this.props.highestBidder !== highestBidder) {
       toast.info(`New highest bidder! ${highestBidder} with ${highestBid} ETH`)
     }
-
-    // do we need this?
-    if (!this.props.userIsSignedIn && userIsSignedIn) {
-      clearInterval(this.intervalId)
-    }
   }
 
   handleFormChange(event) {
     const { auctionForm } = this.state
+    const { target: { id, value } } = event
 
-    this.setState({ auctionForm, ...{ [event.target.id]: event.target.value } })
+    this.setState({ auctionForm: { ...auctionForm, ...{ [id]: value } } })
   }
 
   handleBidSubmit(event) {
     event.preventDefault()
     const { dispatch } = this.props
     const { auctionForm: { bidder, bid } } = this.state
-    if (!bidder || !bid) return // do some form validation thing here
+    if (!bidder || !bid) return this.setState({ formError: 'Please provide a name and bid amount' })
+    if (isNaN(parseFloat(bid))) return this.setState({ formError: 'ETH values must be a whole number or decimal' })
 
     this.setState({ bidInProgress: true })
-    dispatch(placeBid(bidder, bid))
-      .then((highestBidder) => {
-        toast.success(`Bid placed! ${highestBidder} is the highest bidder!`)
+    this.setState({ formError: '' })
+    dispatch(placeBid(bidder, parseFloat(bid).toString()))
+      .then(() => {
+        toast.success(`Bid placed`)
         this.setState({ bidInProgress: false })
       })
       .catch((error) => {
@@ -92,7 +86,7 @@ class App extends React.Component {
 
   render() {
     const { userIsSignedIn, auction } = this.props
-    const { bidInProgress, isLoading, modalIsOpen } = this.state
+    const { bidInProgress, isLoading, modalIsOpen, formError, auctionForm } = this.state
 
     return (
       <main className="main-container">
@@ -102,7 +96,13 @@ class App extends React.Component {
         <AuctionInfo auction={auction} />
         {!userIsSignedIn && <MetaMaskInfo />}
         {userIsSignedIn &&
-          <SubmitBid handleChange={() => this.handleFormChange} handleSubmit={() => this.handleBidSubmit} bidInProgress={bidInProgress} />
+          <SubmitBid
+            handleChange={(event) => this.handleFormChange(event)}
+            handleSubmit={(event) => this.handleBidSubmit(event)}
+            bidInProgress={bidInProgress}
+            error={formError}
+            formValues={auctionForm}
+          />
         }
       </main>
     )

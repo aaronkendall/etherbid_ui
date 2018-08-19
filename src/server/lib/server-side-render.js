@@ -1,20 +1,15 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
-import Web3 from 'web3'
 // import { Helmet } from 'react-helmet'
 // import { StaticRouter as Router } from 'react-router-dom'
 import configureStore from '../../app/store'
 import App from '../../app/containers/App'
 import AuctionService from '../../app/services/auctionService'
-import config from '../config/config'
+import { contractAddress, infuraEndpoint } from '../config/config'
 
 export default (req, res) => {
-  // Truffle expects web3 0.2 API so we need to set this. Pretty bullshit.
-  Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send
-
-  const httpProvider = new Web3.providers.HttpProvider(config.infuraEndpoint)
-  const auctionService = new AuctionService(httpProvider, config.contractAddress)
+  const auctionService = new AuctionService(contractAddress, infuraEndpoint)
 
   return auctionService.getAuctionInfo()
     .then((auction) => {
@@ -39,8 +34,8 @@ export default (req, res) => {
         appHtml,
         initialState: JSON.stringify(store.getState()),
         title: 'EthBid | Buy some Ether using some Ether. Simple',
-        contractAddress: config.contractAddress,
-        infuraEndpoint: config.infuraEndpoint
+        contractAddress,
+        infuraEndpoint
       })
     })
     .catch(error => console.log('Error bootstrapping server render: ', error))
