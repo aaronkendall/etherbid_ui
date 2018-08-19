@@ -17,12 +17,16 @@ class SubmitBid extends React.Component {
 
     return (
       <form className="submit-bid" onSubmit={handleSubmit}>
-        <label htmlFor="bidder" className="submit-bid__label">Name</label>
-        <input id="bidder" type="text" className="submit-bid__input" onChange={handleChange} required />
-        <label htmlFor="bid" className="submit-bid__label">Bid value in ETH</label>
-        <input id="bid" type="tel" className="submit-bid__input" onChange={handleChange} required />
+        <label htmlFor="bidder" className="submit-bid__label">
+          Name
+          <input id="bidder" type="text" className="submit-bid__input" onChange={handleChange} required />
+        </label>
+        <label htmlFor="bid" className="submit-bid__label">
+          Bid value in ETH
+          <input id="bid" type="tel" className="submit-bid__input" onChange={handleChange} required />
+        </label>
         <button className="submit-bid__button" type="submit" onClick={handleSubmit}>
-          Place Bid!
+          Place Bid
         </button>
       </form>
     )
@@ -31,7 +35,7 @@ class SubmitBid extends React.Component {
   _renderLoading() {
     return (
       <div className="submit-bid">
-        <h2 className="submit-bid__in-progress">Placing bid...</h2>
+        <h2 className="submit-bid__in-progress">Placing your bid...</h2>
         <Loading />
       </div>
     )

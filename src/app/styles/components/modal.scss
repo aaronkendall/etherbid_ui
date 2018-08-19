@@ -1,0 +1,52 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+
+  .modal {
+    padding: $spacing-lg;
+    color: $color-black;
+    font-family: $font;
+    position: relative;
+    box-sizing: border-box;
+    max-width: $auction-info-max-width;
+    margin: 0 auto;
+
+    .modal__title {
+      font-size: $font-size-md;
+      font-weight: $font-weight-bold;
+      margin-bottom: $spacing-lg;
+      letter-spacing: $letter-spacing-md;
+
+    }
+
+    .modal__content {
+      line-height: 1.2;
+      letter-spacing: $letter-spacing-sm;
+      font-size: $font-size-md;
+      margin-bottom: $spacing-md;
+
+      .modal__content--link {
+        font-weight: $font-weight-bold;
+        color: $color-button;
+      }
+    }
+
+    .modal__close {
+      background-image: url('/img/close.svg');
+      background-size: contain;
+      width: $font-size-md;
+      height: $font-size-md;
+      position: absolute;
+      top: $spacing-lg;
+      right: $spacing-lg;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

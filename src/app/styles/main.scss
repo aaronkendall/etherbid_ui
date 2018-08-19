@@ -6,9 +6,64 @@
 
 // import the components
 @import 'components/loading';
+@import 'components/auction-info';
+@import 'components/metamask';
+@import 'components/submit-bid';
+@import 'components/modal';
 
 .main-container {
+  box-sizing: border-box;
   min-height: 100vh;
   overflow-x: hidden;
   background: $background-gradient;
+  padding: $spacing-lg;
+  border: $spacing-sm solid $color-black;
+  font-family: $font;
+  font-weight: $font-weight-default;
+  color: white;
+  font-size: $base-font-size;
+  letter-spacing: $letter-spacing-sm;
+
+  .logo {
+    position: relative;
+    width: fit-content;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:after {
+      content: '';
+      background-image: url('/img/info.svg');
+      background-size: contain;
+      width: 15px;
+      height: 15px;
+      display: inline-block;
+      position: absolute;
+      top: 0;
+    }
+  }
+}
+
+h1 {
+  font-size: $font-size-xl;
+  text-transform: uppercase;
+  font-weight: $font-weight-bold;
+  letter-spacing: $letter-spacing-lg;
+  margin-bottom: $spacing-lg;
+}
+
+h2 {
+  font-size: $font-size-lg;
+  letter-spacing: $letter-spacing-md;
+}
+
+h3 {
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+}
+
+p {
+  font-size: $font-size-md;
+  line-height: 1.2;
 }

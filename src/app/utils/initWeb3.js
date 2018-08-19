@@ -18,7 +18,6 @@ export default function initialiseWeb3(dispatch, hasNoAuctionService) {
   }
 
   if (hasNoAuctionService) {
-    console.log('hello')
     Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send
 
     const httpProvider = new Web3.providers.HttpProvider(INFURA_ENDPOINT)

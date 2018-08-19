@@ -1,0 +1,31 @@
+.auction-info {
+  max-width: $auction-info-max-width;
+  margin: 0 auto;
+  padding: $spacing-lg 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .auction-info__highlight {
+    width: 33%;
+    min-width: $highlight-min-width;
+    text-align: center;
+    margin: 0 auto $spacing-lg;
+
+    .auction-info__highlight--title {
+      display: block;
+      text-transform: uppercase;
+      font-weight: $font-weight-bold;
+      font-size: $font-size-xs;
+      margin-bottom: $spacing-sm;
+    }
+
+    &.--full-width {
+      width: 100%;
+    }
+
+    &.--timer {
+      margin: 0 auto ($spacing-lg * 2);
+    }
+  }
+}
