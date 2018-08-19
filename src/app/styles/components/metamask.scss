@@ -3,6 +3,8 @@
   flex-wrap: wrap;
   justify-content: space-between;
   font-size: $font-size-sm;
+  max-width: $auction-info-max-width;
+  margin: 0 auto;
 
   .metamask__info {
     width: 100%;
