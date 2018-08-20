@@ -1,19 +1,13 @@
 const path = require('path')
 const webpack = require('webpack')
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const environment = process.env.NODE_ENV || 'development'
 
 const plugins = {
   development: [],
-  production: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    })
-  ]
+  production: []
 }
 
 const isDevelopment = environment === 'development'
@@ -27,7 +21,8 @@ module.exports = {
         sourceMap: isDevelopment // set to true if you want JS source maps
       }),
       new OptimizeCSSAssetsPlugin({})
-    ]
+    ],
+    nodeEnv: environment
   },
   entry: {
       index: ["babel-polyfill", "./src/app/index.js"],
@@ -40,12 +35,7 @@ module.exports = {
   module: {
       rules: [
         {
-            test: /.js?$/,
-            exclude: /node_modules/,
-            use: 'babel-loader'
-        },
-        {
-            test: /.jsx?$/,
+            test: /\.(js|jsx)$/,
             exclude: /node_modules/,
             use: 'babel-loader'
         },

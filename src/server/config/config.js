@@ -4,7 +4,6 @@ const envConfig = {
     infuraEndpoint: 'https://rinkeby.infura.io/SnIpGs4RANMJbNEiFu2Q'
   },
   production: {
-    contractAddress: '0xmainnet',
     infuraEndpoint: 'https://mainnet.infura.io/SnIpGs4RANMJbNEiFu2Q'
   }
 }

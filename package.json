@@ -10,7 +10,9 @@
     "build": "NODE_ENV=production webpack --optimize-minimize",
     "local": "npm run hot & npm run dev"
   },
-  "engines" : { "node" : "8.9.4" },
+  "engines": {
+    "node": "8.9.4"
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "babel-core": "6.24.1",

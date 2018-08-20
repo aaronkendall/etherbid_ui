@@ -4,7 +4,7 @@ const router = express.Router()
 const render = require('../lib/server-side-render').default
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   return render(req, res)
 })
 
