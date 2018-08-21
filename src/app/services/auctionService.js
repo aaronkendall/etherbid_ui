@@ -34,7 +34,7 @@ export default class AuctionService {
   placeBid(bidder, bidValue, sender) {
     const bidInWei = Units.convert(bidValue, 'eth', 'wei')
     return this.contract.placeBid(bidder, { value: bidInWei, from: sender })
-      .then(() => getAuctionInfo())
+      .then(() => this.getAuctionInfo())
       .catch((error) => console.log('Error placing bid!', error))
   }
 }

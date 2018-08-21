@@ -76,7 +76,7 @@ class App extends React.Component {
     dispatch(placeBid(bidder, parseFloat(bid).toString()))
       .then(() => {
         toast.success(`Bid placed`)
-        this.setState({ bidInProgress: false })
+        this.setState({ bidInProgress: false, auctionForm: { bidder: '', bid: '' } })
       })
       .catch((error) => {
         toast.error('Error placing bid! Perhaps it\'s a gas issue?')

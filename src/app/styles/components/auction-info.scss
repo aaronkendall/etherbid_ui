@@ -11,6 +11,7 @@
     min-width: $highlight-min-width;
     text-align: center;
     margin: 0 auto $spacing-lg;
+    word-wrap: break-word;
 
     .auction-info__highlight--title {
       display: block;

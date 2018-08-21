@@ -13,7 +13,7 @@ export default function auctionReducer(state = defaultState, action) {
 
   switch(action.type) {
     case auction.UPDATE_AUCTION_INFO:
-      return { ...newState, ...action.payload.auction }
+      return { ...newState, ...action.payload }
     default:
       return newState
   }

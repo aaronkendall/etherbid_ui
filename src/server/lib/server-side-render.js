@@ -33,7 +33,7 @@ export default (req, res) => {
       return res.render('index', {
         appHtml,
         initialState: JSON.stringify(store.getState()),
-        title: 'EthBid | Buy some Ether using some Ether. Simple',
+        title: 'ETHBID | Buy some Ether using some Ether. Simple',
         contractAddress,
         infuraEndpoint
       })

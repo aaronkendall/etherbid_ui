@@ -10,7 +10,7 @@ const SubmitBid = ({ handleChange, handleSubmit, error, bidInProgress, formValue
         {error && <span className="submit-bid__error">{error}</span>}
         <label className="submit-bid__label">
           Name
-          <input id="bidder" type="text" className="submit-bid__input" onChange={handleChange} value={formValues.bidder} required />
+          <input id="bidder" type="text" className="submit-bid__input" onChange={handleChange} value={formValues.bidder} maxLength="100" required />
         </label>
         <label className="submit-bid__label">
           Bid value in ETH
@@ -26,7 +26,7 @@ const SubmitBid = ({ handleChange, handleSubmit, error, bidInProgress, formValue
   const _renderLoading = () => {
     return (
       <div className="submit-bid">
-        <h2 className="submit-bid__in-progress">Placing your bid...</h2>
+        <h2 className="submit-bid__in-progress">Placing your bid, check your MetaMask</h2>
         <Loading />
       </div>
     )
