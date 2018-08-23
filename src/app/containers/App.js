@@ -73,7 +73,7 @@ class App extends React.Component {
 
     this.setState({ bidInProgress: true })
     this.setState({ formError: '' })
-    dispatch(placeBid(bidder, parseFloat(bid).toString()))
+    dispatch(placeBid(bidder, parseFloat(bid).toFixed(18)))
       .then(() => {
         toast.success(`Bid placed`)
         this.setState({ bidInProgress: false, auctionForm: { bidder: '', bid: '' } })
