@@ -14,7 +14,7 @@ const SubmitBid = ({ handleChange, handleSubmit, error, bidInProgress, formValue
         </label>
         <label className="submit-bid__label">
           Bid value in ETH
-          <input id="bid" type="text" className="submit-bid__input" onChange={handleChange} value={formValues.bid} required />
+          <input id="bid" type="text" className="submit-bid__input" pattern="[-+]?[0-9]*[.]?[0-9]+" onChange={handleChange} value={formValues.bid} required />
         </label>
         <button className="submit-bid__button" type="submit">
           Place Bid
